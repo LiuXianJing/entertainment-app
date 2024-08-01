@@ -6,8 +6,18 @@
         (activeMenuItem && item.path === activeMenuItem.path) ? 'active' : 'default']"
         @click="handleClickMenuItem(item)"
         >
-          <router-link :to="`${item.path}`">
-            {{ item.name }}
+          <router-link :to="`${item.path}`" class="router-link">
+            <div class="icon">
+                <span class="icon-span">
+                    <grape v-if="item.name.toLocaleLowerCase() === 'game'" />
+                    <VideoCamera v-if="item.name.toLocaleLowerCase() === 'video'" />
+                    <chat-round v-if="item.name.toLocaleLowerCase() === 'chat'" />
+                    <user v-if="item.name.toLocaleLowerCase() === 'mine'" />
+                </span>
+            </div>
+            <div class="name">
+                {{ item.name }}
+            </div>
           </router-link>
         </div>
     </div>
@@ -17,13 +27,19 @@
 import { reactive, ref, watchEffect, } from 'vue';
 import { MenuItem } from '../types';
 import { useRoute } from 'vue-router';
+import {
+    Grape,
+    VideoCamera,
+    ChatRound,
+    User,
+  } from '@element-plus/icons-vue';
 
 const route = useRoute();
 
 const menuItems = reactive<MenuItem[]>([
     {
         name: 'Game',
-        path: '/game'
+        path: '/game',
     },
     {
         name: 'Video',
@@ -75,6 +91,19 @@ watchEffect(() => {
         padding: 0 10px;
         box-sizing: border-box;
         cursor: pointer;
+        .router-link {
+            .icon {
+                text-align: center;
+                height: 25px;
+                .icon-span {
+                    display: inline-block;
+                    width: 30px;
+                }
+            }
+            .name {
+                text-align: center;
+            }
+        }
         &:hover {
             background-color: #5369df;
         }
@@ -87,7 +116,7 @@ watchEffect(() => {
         background-color: aquamarine;
     }
     .active {
-        color: #7e1010;
+        color: #4ee9bb;
         background-color: #5369df;
     }
 }

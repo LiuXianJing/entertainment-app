@@ -1,5 +1,5 @@
 <template>
-    <div class="header hidden sm:block">Header</div>
+    <Header />
     <div class="block sm:flex">
       <div class="left-menu hidden sm:block">
         <Menu></Menu>
@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import Header from './views/Header/index.vue'
 import MenuTabs from './views/MenuTabs.vue';
 import Menu from './views/Menu/index.vue';
 
