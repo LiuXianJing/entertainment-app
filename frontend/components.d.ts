@@ -16,6 +16,7 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     Hello: typeof import('./src/components/Hello.vue')['default']
+    LazyImage: typeof import('./src/components/LazyImage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Video: typeof import('./src/components/Video.vue')['default']

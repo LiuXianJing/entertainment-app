@@ -13,7 +13,8 @@
             :key="colIndex"
             class="col"
             >
-                {{ col.text }}
+                <LazyImage src="src/assets/pictures/mdn.png" alt="cell" />
+                <span>{{ col.text }}</span>
             </div>
         </div>
     </div>
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import { onBeforeMount, reactive, } from 'vue'
 import { GameCellsInfo } from '../../types';
+import LazyImage from '../../components/LazyImage.vue'; 
 
 const cellsArr = reactive<Array<Array<GameCellsInfo>>>([])
 const initCellsArrFun = () => {
@@ -49,9 +51,10 @@ onBeforeMount(() => {
         margin: 10px;
         .col {
             display: flex;
-            width: 50px;
-            height: 50px;
-            margin: 10px;
+            flex-direction: column;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
             text-align: center;
             line-height: 50px;
             background-color: #aaee22;
