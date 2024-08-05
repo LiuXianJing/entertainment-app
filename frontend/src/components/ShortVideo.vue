@@ -35,15 +35,11 @@
         class="footer" 
         >
             <div class="progress">
-                <span class="time">Time: {{ `${videoTimeInfo.currentTime} / ${videoTimeInfo.videoDuration}` }}</span>
+                <span class="time">
+                    {{ `${transformToTime(videoTimeInfo.currentTime)} / ${transformToTime(videoTimeInfo.videoDuration)}` }}
+                </span>
                 <div class="box" :style="`width: ${width};`">
                     <div class="inner" :style="`width: ${progressInnerWidth};`">
-                    </div>
-                    <div 
-                    class="operate" 
-                    :style="`left: ${progressInnerWidth}`"
-                    >
-                        X
                     </div>
                 </div>
             </div>
@@ -97,6 +93,7 @@ import {
     Star,
     MoreFilled,
  } from '@element-plus/icons-vue'
+ import { transformToTime } from '../utils'
 
 const props = defineProps({
     videoName: {
@@ -261,25 +258,19 @@ const handleDownloadVideo = () => {
         bottom: -11px;
         padding: 10px;
         .progress {
-            margin-bottom: 2px;
+            margin-bottom: 10px;
             .time {
 
             }
             .box {
                 display: flex;
                 position: relative;
-                height: 2px;
-                background-color: rgb(255, 153, 0);
+                height: 4px;
+                margin-top: 2px;
+                background-color: rgb(234, 245, 245);
                 .inner {
-                    height: 2px;
-                    background-color: rgb(234, 245, 245);
-                }
-                .operate {
-                    position: absolute;
-                    bottom: -10px;
-                    width: 24px;
-                    height: 24px;
-                    cursor: pointer;
+                    height: 4px;
+                    background-color: rgb(255, 153, 0);
                 }
             }
         }
@@ -325,9 +316,9 @@ const handleDownloadVideo = () => {
             flex: 1;
             display: flex;
             align-items: end;
+            margin-bottom: 30px;
             span {
                 display: inline-block;
-                margin-bottom: 20px;
             }
         }
     }
