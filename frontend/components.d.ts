@@ -17,8 +17,10 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     Hello: typeof import('./src/components/Hello.vue')['default']
     LazyImage: typeof import('./src/components/LazyImage.vue')['default']
+    LongVideo: typeof import('./src/components/LongVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ShortVideo: typeof import('./src/components/ShortVideo.vue')['default']
     Video: typeof import('./src/components/Video.vue')['default']
   }
 }

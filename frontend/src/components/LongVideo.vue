@@ -135,7 +135,7 @@ const props = defineProps({
     videoName: {
         type: String,
         required: false,
-        default: 'Video'
+        default: 'Long Video'
     },
     src: {
         type: String,
