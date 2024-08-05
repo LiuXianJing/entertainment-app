@@ -24,12 +24,10 @@ import Menu from './views/Menu/index.vue';
   height: 50px;
 }
 .left-menu {
-    width: 200px;
     height: calc(100vh - 50px);
 }
 .app-content {
     flex: 1;
     height: calc(100vh - 50px);
-    padding: 10px 10px;
 }
 </style>
