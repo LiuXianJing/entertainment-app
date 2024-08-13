@@ -1,5 +1,5 @@
 # Description
-The entertainment app includes functions such as gaming, chatting, and video, and is compatible with both mobile and PC devices. It is developed by Vue3, TypeScript，tailwindcss, and so on.
+This project is based on Vue3, and is compatible with both mobile and PC devices. The entertainment app includes functions such as gaming, chatting, and video.
 
 # Technology stack
 ## front end
