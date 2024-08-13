@@ -35,15 +35,11 @@
         class="footer" 
         >
             <div class="progress">
-                <span class="time">Time: {{ `${videoTimeInfo.currentTime} / ${videoTimeInfo.videoDuration}` }}</span>
+                <span class="time">
+                    {{ `${transformToTime(videoTimeInfo.currentTime)} / ${transformToTime(videoTimeInfo.videoDuration)}` }}
+                </span>
                 <div class="box" :style="`width: ${width};`">
                     <div class="inner" :style="`width: ${progressInnerWidth};`">
-                    </div>
-                    <div 
-                    class="operate" 
-                    :style="`left: ${progressInnerWidth}`"
-                    >
-                        X
                     </div>
                 </div>
             </div>
@@ -63,17 +59,83 @@
                 <div class="operate-item good">
                     <Opportunity style="" />
                 </div>
-                <div class="operate-item comment">
-                    <Comment />
+                <div class="operate-item comment" @click="handleClickCommentIcon">
+                    <span class="icon">
+                        <Comment />
+                    </span>
+                    <span class="text comments-number">
+                        {{ transformNumber(videoCommentInfo.length) }}
+                    </span>
                 </div>
                 <div class="operate-item star">
                     <Star />
                 </div>
             </div>
-            <div class="other">
+            <div class="other" @click="handleClickMoreIcon">
                 <MoreFilled />
             </div>
         </div>
+        <el-drawer
+        v-model="videoCommentDrawerVisible"
+        direction="btt"
+        :with-header="false"
+        :append-to-body="true"
+        size="60%"
+        class="short-video-comment-drawer"
+        >
+            <div class="short-video-comment-drawer-container">
+                <div class="header">
+                    {{videoCommentInfo.length}}条评论!
+                </div>
+                <div class="comments">
+                    <div class="group" v-for="group in videoCommentInfo">
+                        <div class="avatar">
+                            <span><User style="width: 20px;" /></span>
+                            <span class="user-name">
+                                {{ group.name }}
+                            </span>
+                        </div>
+                        <div class="content">{{ group.content }}</div>
+                        <div class="time">{{ group.time }}</div>
+                    </div>
+                </div>
+            </div>
+        </el-drawer>
+        <el-drawer
+        v-model="videoMoreDrawerVisible"
+        direction="btt"
+        :with-header="false"
+        :append-to-body="true"
+        size="30%"
+        class="short-video-more-drawer"
+        >
+            <div class="short-video-more-drawer-container">
+                <div class="operate-item">
+                    <span class="icon">
+                        <Share />
+                    </span>
+                    <span class="text">
+                        Share
+                    </span>
+                </div>
+                <div class="operate-item">
+                    <span class="icon">
+                        <CopyDocument />
+                    </span>
+                    <span class="text">
+                        Copy
+                    </span>
+                </div>
+                <div class="operate-item">
+                    <span class="icon">
+                        <Download />
+                    </span>
+                    <span class="text">
+                        Down
+                    </span>
+                </div>
+            </div>
+        </el-drawer>
     </div>
 </template>
 
@@ -96,7 +158,14 @@ import {
     Comment,
     Star,
     MoreFilled,
+    Share,
+    CopyDocument,
+    Download,
  } from '@element-plus/icons-vue'
+ import { 
+    transformToTime, 
+    transformNumber, 
+} from '../utils'
 
 const props = defineProps({
     videoName: {
@@ -230,6 +299,38 @@ const handleDownloadVideo = () => {
     }
 }
 
+const videoCommentDrawerVisible = ref<boolean>(false)
+const handleClickCommentIcon = () => {
+    videoCommentDrawerVisible.value = true
+}
+
+const videoCommentInfoArr = [
+    {
+        id: 'id-1',
+        name: 'user-1',
+        content: '这是一个不错的短视频！',
+        time: '2022-08-15 18:00:00',
+    },
+    {
+        id: 'id-2',
+        name: 'user-2',
+        content: '������！',
+        time: '2022-08-15 17:30:00',
+    },
+    {
+        id: 'id-3',
+        name: 'user-3',
+        content: '������',
+        time: '2022-08-15 17:00:00',
+    },
+]
+const videoCommentInfo = ref<object[]>(videoCommentInfoArr)
+
+const videoMoreDrawerVisible = ref<boolean>(false)
+const handleClickMoreIcon = () => {
+    videoMoreDrawerVisible.value = true
+}
+
 </script>
 
 <style scoped lang="less">
@@ -261,25 +362,19 @@ const handleDownloadVideo = () => {
         bottom: -11px;
         padding: 10px;
         .progress {
-            margin-bottom: 2px;
+            margin-bottom: 10px;
             .time {
 
             }
             .box {
                 display: flex;
                 position: relative;
-                height: 2px;
-                background-color: rgb(255, 153, 0);
+                height: 4px;
+                margin-top: 2px;
+                background-color: rgb(234, 245, 245);
                 .inner {
-                    height: 2px;
-                    background-color: rgb(234, 245, 245);
-                }
-                .operate {
-                    position: absolute;
-                    bottom: -10px;
-                    width: 24px;
-                    height: 24px;
-                    cursor: pointer;
+                    height: 4px;
+                    background-color: rgb(255, 153, 0);
                 }
             }
         }
@@ -308,8 +403,22 @@ const handleDownloadVideo = () => {
             flex: 1;
             display: flex;
             flex-direction: column;
+            span {
+                display: inline-block
+            }
             .operate-item {
                 flex: 1;
+                position: relative;
+                margin: 5px;
+                span {
+                    width: 100%;
+                }
+                .text {
+                    position: absolute;
+                    left: 0;
+                    bottom: -5px;
+                    text-align: center;
+                }
             }
             .user {
                 margin-bottom: 20px;
@@ -325,11 +434,71 @@ const handleDownloadVideo = () => {
             flex: 1;
             display: flex;
             align-items: end;
+            margin-bottom: 30px;
             span {
                 display: inline-block;
-                margin-bottom: 20px;
             }
         }
     }
 }
+
+.short-video-comment-drawer {
+    .short-video-comment-drawer-container {
+        color: #000000;
+        .header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .comments {
+            .group {
+                margin-bottom: 20px;
+                .avatar {
+                    display: flex;
+                    align-items: start;
+                    span {
+                        display: inline-block;
+                    }
+                    .user-name {
+                        margin-left: 10px;
+                        color: rgb(174, 224, 35)
+                    }
+                }
+                .content {
+                    font-size: 18px;
+                }
+                .time {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+.short-video-more-drawer {
+    .short-video-more-drawer-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+        width: 100%;
+        color: #000000;
+        .operate-item {
+            width: 15%;
+            span {
+                display: inline-block;
+                width: 100%;
+            }
+            .icon {
+                color: #b38989;
+            }
+            .text {
+                text-align: center;
+                height: 24px;
+                text-overflow: ellipsis;
+                word-break: break-all;
+            }
+        }
+    }
+}
+
 </style>
