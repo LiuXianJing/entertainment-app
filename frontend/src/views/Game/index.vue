@@ -48,13 +48,14 @@ onBeforeMount(() => {
 .cells {
     .row {
         display: flex;
+        flex-wrap: wrap;
         margin: 10px;
         .col {
             display: flex;
             flex-direction: column;
             width: 100px;
             height: 100px;
-            margin: 20px;
+            margin: 4%;
             text-align: center;
             line-height: 50px;
             background-color: #aaee22;
