@@ -110,15 +110,15 @@
         class="short-video-more-drawer"
         >
             <div class="short-video-more-drawer-container">
-                <div class="operate-item">
+                <div class="operate-item" @click="handleOperateMore('shareToWX')">
                     <span class="icon">
                         <Share />
                     </span>
                     <span class="text">
-                        Share
+                        Share WX
                     </span>
                 </div>
-                <div class="operate-item">
+                <div class="operate-item" @click="handleOperateMore('copy')">
                     <span class="icon">
                         <CopyDocument />
                     </span>
@@ -126,7 +126,7 @@
                         Copy
                     </span>
                 </div>
-                <div class="operate-item">
+                <div class="operate-item" @click="handleOperateMore('download')">
                     <span class="icon">
                         <Download />
                     </span>
@@ -166,6 +166,7 @@ import {
     transformToTime, 
     transformNumber, 
 } from '../utils'
+import { ShortVideoMoreOperateType } from '../types';
 
 const props = defineProps({
     videoName: {
@@ -290,7 +291,7 @@ const handleStop = () => {
 const handleDownloadVideo = () => {
     if(videoRef.value) {
         const a = document.createElement("a")
-        a.className = "temp-video-download"
+        a.className = "temp-short-video-download-link"
         a.setAttribute("href", src)
         const srcPathsArr = src.split("/")
         a.download = srcPathsArr[srcPathsArr.length - 1]
@@ -329,6 +330,20 @@ const videoCommentInfo = ref<object[]>(videoCommentInfoArr)
 const videoMoreDrawerVisible = ref<boolean>(false)
 const handleClickMoreIcon = () => {
     videoMoreDrawerVisible.value = true
+}
+
+const handleOperateMore = (type: ShortVideoMoreOperateType) => {
+    if(type === "shareToWX") {
+        const url = 'https://work.weixin.qq.com/ca/xxxx?customer_channel=YC1:xxxx'
+        const shareUrl = `weixin://biz/ww/profile/${encodeURIComponent(url)}`
+        window.location.href = shareUrl
+    }
+    if(type === "copy") {
+        
+    }
+    if(type === "download") {
+        handleDownloadVideo()
+    }
 }
 
 </script>
