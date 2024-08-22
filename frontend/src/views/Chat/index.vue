@@ -1,18 +1,19 @@
 <template>
-    <div>
-        chat
-    </div>
-    <div>
+    <div class="chat-page">
         <el-button 
         type="primary"
         @click="handleDisplayMedia"
         >
             共享屏幕
         </el-button>
+        <Chat :chatMessagesArr="chatMessagesArr" />
     </div>
 </template>
 
 <script setup lang="ts">
+import { reactive } from "vue";
+import Chat from "../../components/Chat.vue"
+import { MessageType, } from "../../types"
 
 const handleDisplayMedia = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
@@ -36,4 +37,24 @@ const handleDisplayMedia = async () => {
     });
     mediaRecorder.start();
 }
+
+const messagesArrTemp: MessageType[] = []
+for (let i = 0; i < 10; i++) {
+    const obj: MessageType = {
+        id: `id-${i}`,
+        content: i + 'fdsgds',
+        type: 'text',
+        time: new Date(),
+        ownerType:['mine', 'other'][i % 2] as any,
+        owner: ['mine', 'other'][i % 2] as any,
+    }
+    messagesArrTemp.push(obj)
+}
+const chatMessagesArr = reactive<MessageType[]>(messagesArrTemp)
 </script>
+
+<style scoped lang="less">
+.chat-page {
+    padding: 5%;
+}
+</style>
